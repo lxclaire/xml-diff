@@ -32,8 +32,8 @@ module Diff
       x = self.children.sort_by(&:name)
       y = other.children.sort_by(&:name)
       if !x.length.eql?(y.length)
-        puts "items of #{self.path} from file1 : #{x.length}"
-        puts "items of #{other.path} from file2 : #{y.length}"
+        puts "items of #{self.path} from file1 : #{x.length}" if block
+        puts "items of #{other.path} from file2 : #{y.length}" if block
         return false
       end
       res = true
@@ -69,9 +69,9 @@ module Diff
       x = self.children
       y = other.children
       if !x.length.eql?(y.length)
-        #puts "items of #{self.path} from file1 : #{x.length}"
-        #puts "items of #{other.path} from file2 : #{y.length}"
-        return false unless block
+        puts "items of #{self.path} from file1 : #{x.length}" if block
+        puts "items of #{other.path} from file2 : #{y.length}" if block
+        return false 
       end
       res = true
       match = {}
@@ -81,6 +81,7 @@ module Diff
           if (!match.has_value?(j) && xi.diff_tree(yj,options))
             match[i] = j
             changes << [i, ' ', xi]
+            break
           end
         end
         unless match.has_key?(i)

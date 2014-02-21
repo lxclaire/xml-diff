@@ -151,8 +151,8 @@ module Diff
     x = self.children
     y = other.children
     if !x.length.eql?(y.length)
-      puts "items of #{self.path} : #{x.length}"
-      puts "items of #{other.path} : #{y.length}"
+      puts "items of #{self.path} from file1: #{x.length}" if block
+      puts "items of #{other.path} from file2: #{y.length}" if block
       return false 
     end
     res = true

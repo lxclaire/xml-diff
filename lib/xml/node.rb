@@ -21,10 +21,10 @@ class Nokogiri::XML::Node
   #   Yield nodes that were removed.
   #
   # @option options [Boolean] :array_ordered
-  #   If elements of array should be ordered when comparing
+  #   If the order of elements in an array should be considered when comparing.
   #
   # @option options [Boolean] :ordered
-  #   If other elements should be ordered when comparing
+  #   If the order of child nodes should be considered when comparing.
   #
   # @yield [change, node]
   #   The given block will be passed each changed node.
@@ -40,10 +40,12 @@ class Nokogiri::XML::Node
   #
   def diff(other,options={},&block)
     if (block && (options[:added] || options[:removed]))
-      out = Proc.new{|change,node| 
-                     if    (change == '+' && options[:added])   then yield change, node
-                     elsif (change == '-' && options[:removed]) then yield change, node
-                     end}
+      out = Proc.new{
+        |change,node| 
+        if    (change == '+' && options[:added])   then yield change, node
+        elsif (change == '-' && options[:removed]) then yield change, node
+        end
+      }
       return diff_tree(other, options, &out)
     else
       return diff_tree(other, options, &block)

@@ -4,6 +4,8 @@ Comparing two XML/HTML documents and output the differences.
 
 ## Examples
 
+Compare two XML documents, considering both the order of elements in an array and the order of child nodes.
+
     require 'nokogiri'
     require File.expand_path('../lib/xml',__FILE__)
 
@@ -38,7 +40,7 @@ Only consider the order of arrays:
     # - D                                               /divs/div[2]/b
     # + B                                               /divs/div[2]/b
   
-Don't consider the order, there is no output
+Don't consider the order, there will be no output, since the two is same:
 
     doc1.diff(doc2, {:added => true, :removed => true, :ordered => false, :array_ordered => false}) do |change,node|
       puts "#{change} #{node.to_html}".ljust(50) + node.parent.path

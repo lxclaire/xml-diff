@@ -1,7 +1,7 @@
 module Diff
 
   #
-  # Compare `self` and another node, consider them as trees and find the difference
+  # Compare `self` and another node, consider them as trees and find the difference.
   #
   # @param [#tdiff_each_child] other
   #   The other tree.
@@ -19,7 +19,7 @@ module Diff
   #   A node from one of the two trees.
   #
   # @return [Boolean]
-  #   Specifies whether the two nodes are same.
+  #   Specifies whether the two trees are same.
   #
   def diff_tree(other,options={},&block)
     # check if the nodes differ
@@ -104,11 +104,11 @@ module Diff
     y = other.attribute_nodes
     res = true
     x.each do |attri|
-      if other[attri.name] == nil
+      if other[attri.name].nil?
         yield '-', attri if block
         res = false
         return res unless block
-      elsif other[attri.name]==attri.value
+      elsif other[attri.name].eql?(attri.value)
         yield ' ', attri if block
       else
         yield '-', attri if block
@@ -118,7 +118,7 @@ module Diff
       end   
     end
     y.each do |attri|
-      if self[attri.name] == nil
+      if self[attri.name].nil?
         yield '+', attri if block
         res = false
         return res unless block
